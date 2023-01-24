@@ -25,7 +25,6 @@ class CustomListAdapter(private val context: Context, private val data: List<Lis
         val item = getItem(p0)
         val view = p1 ?: inflater.inflate(resource, null)
         view.findViewById<TextView>(R.id.text_title).text = item.title
-        view.findViewById<TextView>(R.id.text_id).text = item.id.toString()
         return view
     }
 }
