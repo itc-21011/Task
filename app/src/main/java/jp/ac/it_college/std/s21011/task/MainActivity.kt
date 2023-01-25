@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity() {
     fun setListViewAdapter(listView: ListView)
     {
         val helper = DBHelper(this)
-        helper.readableDatabase.use {
+        helper.readableDatabase.let {
                 db -> db.query("memos", arrayOf("id", "title", "content"),null,null,null,null,null,null)
-            .use { cursor ->
+            .let { cursor ->
                 val memoList = mutableListOf<ListItem>()
                 if (cursor.moveToFirst()) {
                     for (i in 1..cursor.count) {

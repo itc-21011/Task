@@ -22,9 +22,9 @@ class MemoActivity: AppCompatActivity() {
         val textContent = findViewById<EditText>(R.id.text_content)
         val memoId: Long = intent.getLongExtra("id",0)
         if (memoId != 0L) {
-            helper.readableDatabase.use {
+            helper.readableDatabase.let {
                     db -> db.query(TABLE_NAME, arrayOf("id", "title", "content"), "id = ?", arrayOf(memoId.toString()), null, null, null, "1")
-                .use { cursor ->
+                .let { cursor ->
                     if (cursor.moveToFirst()) {
                         textTitle.setText(cursor.getString(1))
                         textContent.setText(cursor.getString(2))
@@ -34,7 +34,7 @@ class MemoActivity: AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.save_button).setOnClickListener{
-            helper.writableDatabase.use {
+            helper.writableDatabase.let {
                     db ->
                 val values = ContentValues().apply {
                     put("title", textTitle.text.toString())
@@ -50,7 +50,7 @@ class MemoActivity: AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.delete_button).setOnClickListener {
-            helper.writableDatabase.use {
+            helper.writableDatabase.let {
                     db ->
                 db.delete(TABLE_NAME, "id = ?", arrayOf(memoId.toString()))
                 Toast.makeText(this, "削除しました", Toast.LENGTH_SHORT).show()
