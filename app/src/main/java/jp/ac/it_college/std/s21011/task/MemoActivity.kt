@@ -2,9 +2,7 @@ package jp.ac.it_college.std.s21011.task
 
 import android.content.ContentValues
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class MemoActivity: AppCompatActivity() {
@@ -16,6 +14,11 @@ class MemoActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.memo)
+
+        val spinner = findViewById<Spinner>(R.id.category_spinner)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.spinner_items, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
 
         val helper = DBHelper(this)
         val textTitle = findViewById<EditText>(R.id.text_title)

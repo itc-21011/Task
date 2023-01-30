@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Task</string>
+    <string-array name="spinner_items">
+        <item>買い物</item>
+        <item>勉強</item>
+        <item>仕事</item>
+        <item>その他</item>
+    </string-array>
 </resources>

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CustomListAdapter(private val context: Context, private val data: List<ListItem>, private val resource: Int): BaseAdapter() {
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -25,6 +27,11 @@ class CustomListAdapter(private val context: Context, private val data: List<Lis
         val item = getItem(p0)
         val view = p1 ?: inflater.inflate(resource, null)
         view.findViewById<TextView>(R.id.text_title).text = item.title
+
+        val data = Date()
+        val df = SimpleDateFormat("yyyy/MM/dd")
+        val tvDate = view.findViewById<TextView>(R.id.tx_Date)
+        tvDate.setText(df.format(data))
         return view
     }
 }
