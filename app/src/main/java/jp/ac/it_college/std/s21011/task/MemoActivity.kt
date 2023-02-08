@@ -15,12 +15,13 @@ class MemoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.memo)
 
+        val helper = DBHelper(this)
+
         val spinner = findViewById<Spinner>(R.id.category_spinner)
         val adapter = ArrayAdapter.createFromResource(this, R.array.spinner_items, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
-        val helper = DBHelper(this)
         val textTitle = findViewById<EditText>(R.id.text_title)
         val textContent = findViewById<EditText>(R.id.text_content)
         val memoId: Long = intent.getLongExtra("id",0)
