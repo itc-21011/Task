@@ -6,7 +6,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class MemoActivity: AppCompatActivity() {
-
     companion object{
         private const val TABLE_NAME="memos"
     }
@@ -15,12 +14,20 @@ class MemoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.memo)
 
-        val helper = DBHelper(this)
-
-        val spinner = findViewById<Spinner>(R.id.category_spinner)
-        val adapter = ArrayAdapter.createFromResource(this, R.array.spinner_items, android.R.layout.simple_spinner_item)
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        adapter.add("1")
+        adapter.add("2")
+        adapter.add("3")
+        adapter.add("4")
+
+        val spinner: Spinner = findViewById(R.id.category_spinner)
         spinner.adapter = adapter
+
+        spinner.onItemSelectedListener
+
+        val helper = DBHelper(this)
 
         val textTitle = findViewById<EditText>(R.id.text_title)
         val textContent = findViewById<EditText>(R.id.text_content)
