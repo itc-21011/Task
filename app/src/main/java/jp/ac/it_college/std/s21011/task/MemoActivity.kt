@@ -4,28 +4,23 @@ import android.content.ContentValues
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import jp.ac.it_college.std.s21011.task.databinding.MemoBinding
 
 class MemoActivity: AppCompatActivity() {
+
+    private lateinit var binding: MemoBinding
     companion object{
         private const val TABLE_NAME="memos"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.memo)
+        binding = MemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        adapter.add("1")
-        adapter.add("2")
-        adapter.add("3")
-        adapter.add("4")
-
-        val spinner: Spinner = findViewById(R.id.category_spinner)
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener
+        val menuList = arrayListOf("1", "2", "3", "4")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList)
+        binding.autoCompleteTextView.setAdapter(adapter)
 
         val helper = DBHelper(this)
 
