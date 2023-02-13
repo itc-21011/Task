@@ -73,4 +73,5 @@ class MemoActivity: AppCompatActivity() {
             finish()
         }
     }
+
 }
