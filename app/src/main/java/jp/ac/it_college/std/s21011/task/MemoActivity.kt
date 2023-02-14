@@ -18,10 +18,6 @@ class MemoActivity: AppCompatActivity() {
         binding = MemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val menuList = arrayListOf("1", "2", "3", "4")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList)
-        binding.autoCompleteTextView.setAdapter(adapter)
-
         val helper = DBHelper(this)
 
         val textTitle = findViewById<EditText>(R.id.text_title)
