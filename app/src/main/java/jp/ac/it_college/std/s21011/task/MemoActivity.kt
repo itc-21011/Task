@@ -17,6 +17,7 @@ class MemoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = MemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        title = "メモアプリ"
 
         val helper = DBHelper(this)
 
