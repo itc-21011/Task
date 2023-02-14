@@ -17,6 +17,7 @@ class MemoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = MemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        title = "メモアプリ"
 
         val menuList = arrayListOf("1", "2", "3", "4")
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList)
