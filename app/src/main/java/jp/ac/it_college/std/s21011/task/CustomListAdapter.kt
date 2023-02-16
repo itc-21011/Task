@@ -29,7 +29,7 @@ class CustomListAdapter(private val context: Context, private val data: List<Lis
         view.findViewById<TextView>(R.id.text_title).text = item.title
 
         val data = Date()
-        val df = SimpleDateFormat("yyyy/MM/dd")
+        val df = SimpleDateFormat("yyyy-MM-dd")
         val tvDate = view.findViewById<TextView>(R.id.tx_Date)
         tvDate.setText(df.format(data))
         return view

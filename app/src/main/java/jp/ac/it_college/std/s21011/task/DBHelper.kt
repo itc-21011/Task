@@ -14,6 +14,7 @@ class DBHelper(context: Context?): SQLiteOpenHelper(context, DBNAME, null, versi
         db?.execSQL("create table memos (id integer primary key, title text, content text)")
     }
 
+
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
 
     }

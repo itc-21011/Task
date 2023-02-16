@@ -2,22 +2,27 @@ package jp.ac.it_college.std.s21011.task
 
 import android.content.ContentValues
 import android.os.Bundle
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import jp.ac.it_college.std.s21011.task.databinding.MemoBinding
 
 class MemoActivity: AppCompatActivity() {
-
-    private lateinit var binding: MemoBinding
     companion object{
         private const val TABLE_NAME="memos"
     }
 
+    private val spItems = arrayOf("買い物","勉強","仕事","その他")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = MemoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        title = "メモアプリ"
+        setContentView(R.layout.memo)
+
+        val spinner = findViewById<Spinner>(R.id.tx_category)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, spItems)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
 
         val helper = DBHelper(this)
 
@@ -56,7 +61,6 @@ class MemoActivity: AppCompatActivity() {
             helper.writableDatabase.let {
                     db ->
                 db.delete(TABLE_NAME, "id = ?", arrayOf(memoId.toString()))
-                Toast.makeText(this, "削除しました", Toast.LENGTH_SHORT).show()
             }
             finish()
         }
@@ -65,5 +69,4 @@ class MemoActivity: AppCompatActivity() {
             finish()
         }
     }
-
 }
