@@ -89,13 +89,26 @@
 
     <TextView
         android:id="@+id/title_category"
-        android:layout_width="120dp"
-        android:layout_height="30dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="カテゴリー選択 :"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_content" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/shape_outer_frame"
+        app:defaultNavHost="true"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_content"
+        app:navGraph="@navigation/nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

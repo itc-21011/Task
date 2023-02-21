@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 import jp.ac.it_college.std.s21011.task.databinding.MemoBinding
 
 class MemoActivity: AppCompatActivity() {
@@ -23,14 +24,16 @@ class MemoActivity: AppCompatActivity() {
 
         val textTitle = findViewById<EditText>(R.id.text_title)
         val textContent = findViewById<EditText>(R.id.text_content)
+        val textCategory = findViewById<FragmentContainerView>(R.id.fragment)
         val memoId: Long = intent.getLongExtra("id",0)
         if (memoId != 0L) {
-            helper.writableDatabase.let {
-                    db -> db.query(TABLE_NAME, arrayOf("id", "title", "content"), "id = ?", arrayOf(memoId.toString()), null, null, null, "1")
+            helper.readableDatabase.let {
+                    db -> db.query(TABLE_NAME, arrayOf("id", "title", "content", "expense_item_id"), "id = ?", arrayOf(memoId.toString()), null, null, null, "1")
                 .let { cursor ->
                     if (cursor.moveToFirst()) {
                         textTitle.setText(cursor.getString(1))
                         textContent.setText(cursor.getString(2))
+                        textCategory
                     }
                 }
             }
