@@ -2,27 +2,22 @@ package jp.ac.it_college.std.s21011.task
 
 import android.content.ContentValues
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import jp.ac.it_college.std.s21011.task.databinding.MemoBinding
 
 class MemoActivity: AppCompatActivity() {
     companion object{
         private const val TABLE_NAME="memos"
     }
 
-    private val spItems = arrayOf("買い物","勉強","仕事","その他")
+    private lateinit var binding: MemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.memo)
-
-        val spinner = findViewById<Spinner>(R.id.tx_category)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, spItems)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
+        binding = MemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val helper = DBHelper(this)
 
@@ -30,7 +25,7 @@ class MemoActivity: AppCompatActivity() {
         val textContent = findViewById<EditText>(R.id.text_content)
         val memoId: Long = intent.getLongExtra("id",0)
         if (memoId != 0L) {
-            helper.readableDatabase.let {
+            helper.writableDatabase.let {
                     db -> db.query(TABLE_NAME, arrayOf("id", "title", "content"), "id = ?", arrayOf(memoId.toString()), null, null, null, "1")
                 .let { cursor ->
                     if (cursor.moveToFirst()) {

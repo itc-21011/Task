@@ -6,12 +6,15 @@ import android.view.Menu
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import jp.ac.it_college.std.s21011.task.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         title = "メモアプリ"
 
         val add = findViewById<Button>(R.id.add)
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     fun setListViewAdapter(listView: ListView)
     {
         val helper = DBHelper(this)
-        helper.readableDatabase.let {
+        helper.writableDatabase.let {
                 db -> db.query("memos", arrayOf("id", "title", "content"),null,null,null,null,null,null)
             .let { cursor ->
                 val memoList = mutableListOf<ListItem>()

@@ -1,11 +1,12 @@
 package jp.ac.it_college.std.s21011.task
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import android.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
+import android.widget.SimpleCursorAdapter
+import androidx.fragment.app.Fragment
 import jp.ac.it_college.std.s21011.task.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
@@ -18,10 +19,18 @@ class FirstFragment : Fragment() {
     ): View {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
-        val category = resources.getStringArray(R.array.spinner_items)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, category)
-        binding.textCategory.setAdapter(arrayAdapter)
+        val helper = DBHelper(requireContext())
+        val sql = "SELECT Item_id as _id, Item_name FROM items"
+        val cursor = helper.readableDatabase.rawQuery(sql, null)
 
+        binding.spinner.adapter = SimpleCursorAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            cursor,
+            arrayOf("Item_name"),
+            intArrayOf(android.R.id.text1),
+            FLAG_REGISTER_CONTENT_OBSERVER
+        )
         return binding.root
     }
 

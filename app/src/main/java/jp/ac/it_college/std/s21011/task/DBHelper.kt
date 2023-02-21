@@ -11,13 +11,23 @@ class DBHelper(context: Context?): SQLiteOpenHelper(context, DBNAME, null, versi
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("create table memos (id integer primary key, title text, content text)")
+        db?.let {
+            it.execSQL("create table items (" + "Item_id integer primary key, Item_name text)")
+            it.execSQL("create table memos (" + "id integer primary key, title text, content text, expense_item_id INTEGER DEFAULT '1' NOT NULL, FOREIGN KEY (expense_item_id) REFERENCES items(Item_id))")
+            it.execSQL("INSERT INTO items (Item_id, Item_name)" + " VALUES('1', '買い物')")
+            it.execSQL("INSERT INTO items (Item_id, Item_name)" + " VALUES('2', '勉強')")
+            it.execSQL("INSERT INTO items (Item_id, Item_name)" + " VALUES('3', '仕事')")
+            it.execSQL("INSERT INTO items (Item_id, Item_name)" + " VALUES('4', 'その他')")
+        }
     }
 
-
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.let {
+            it.execSQL("DROP TABLE IF EXISTS memos")
+            onCreate(it)
+        }
     }
+
 
     override fun onOpen(db: SQLiteDatabase?) {
         super.onOpen(db)
