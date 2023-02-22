@@ -3,7 +3,6 @@ package jp.ac.it_college.std.s21011.task
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import jp.ac.it_college.std.s21011.task.databinding.ActivityMainBinding
@@ -17,18 +16,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         title = "メモアプリ"
 
-        val add = findViewById<Button>(R.id.add)
-        val listView = findViewById<ListView>(R.id.listView)
-        setListViewAdapter(listView)
+        setListViewAdapter(binding.listView)
 
-        add.setOnClickListener {
+        binding.add.setOnClickListener {
             val intent = Intent(this, MemoActivity::class.java)
             startActivity(intent)
         }
 
-        listView.setOnItemClickListener { av, view, position, id ->
+        binding.listView.setOnItemClickListener { av, view, position, id ->
             val intent = Intent(this, MemoActivity::class.java)
-            val itemId = listView.adapter.getItemId(position)
+            val itemId = binding.listView.adapter.getItemId(position)
             intent.putExtra("id", itemId)
             startActivity(intent)
         }
@@ -37,8 +34,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val helper = DBHelper(this)
-        val listView = findViewById<ListView>(R.id.listView)
-        setListViewAdapter(listView)
+        setListViewAdapter(binding.listView)
     }
 
     fun setListViewAdapter(listView: ListView)

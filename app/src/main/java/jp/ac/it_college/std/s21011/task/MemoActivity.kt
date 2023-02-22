@@ -3,9 +3,7 @@ package jp.ac.it_college.std.s21011.task
 import android.content.ContentValues
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
 import jp.ac.it_college.std.s21011.task.databinding.MemoBinding
 
 class MemoActivity: AppCompatActivity() {
@@ -22,29 +20,27 @@ class MemoActivity: AppCompatActivity() {
 
         val helper = DBHelper(this)
 
-        val textTitle = findViewById<EditText>(R.id.text_title)
-        val textContent = findViewById<EditText>(R.id.text_content)
-        val textCategory = findViewById<FragmentContainerView>(R.id.fragment)
+
         val memoId: Long = intent.getLongExtra("id",0)
         if (memoId != 0L) {
             helper.readableDatabase.let {
                     db -> db.query(TABLE_NAME, arrayOf("id", "title", "content", "expense_item_id"), "id = ?", arrayOf(memoId.toString()), null, null, null, "1")
                 .let { cursor ->
                     if (cursor.moveToFirst()) {
-                        textTitle.setText(cursor.getString(1))
-                        textContent.setText(cursor.getString(2))
-                        textCategory
+                        binding.textTitle.setText(cursor.getString(1))
+                        binding.textContent.setText(cursor.getString(2))
                     }
                 }
             }
         }
 
-        findViewById<Button>(R.id.save_button).setOnClickListener{
+        binding.saveButton.setOnClickListener{
             helper.writableDatabase.let {
                     db ->
                 val values = ContentValues().apply {
-                    put("title", textTitle.text.toString())
-                    put("Content", textContent.text.toString())
+                    put("title", binding.textTitle.text.toString())
+                    put("Content", binding.textContent.text.toString())
+
                 }
                 if (memoId != 0L) {
                     db.update(TABLE_NAME, values,"id = ?", arrayOf(memoId.toString()))
@@ -55,7 +51,7 @@ class MemoActivity: AppCompatActivity() {
             finish()
         }
 
-        findViewById<Button>(R.id.delete_button).setOnClickListener {
+        binding.deleteButton.setOnClickListener {
             helper.writableDatabase.let {
                     db ->
                 db.delete(TABLE_NAME, "id = ?", arrayOf(memoId.toString()))
