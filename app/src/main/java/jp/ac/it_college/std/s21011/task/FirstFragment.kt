@@ -11,7 +11,7 @@ import jp.ac.it_college.std.s21011.task.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
     private var _binding: FragmentFirstBinding? = null
-    private val binding get() = _binding!!
+    internal val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

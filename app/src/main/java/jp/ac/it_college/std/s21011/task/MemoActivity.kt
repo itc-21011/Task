@@ -1,6 +1,7 @@
 package jp.ac.it_college.std.s21011.task
 
 import android.content.ContentValues
+import android.database.Cursor
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +41,11 @@ class MemoActivity: AppCompatActivity() {
                 val values = ContentValues().apply {
                     put("title", binding.textTitle.text.toString())
                     put("Content", binding.textContent.text.toString())
-
+                    val sitem: Cursor? = binding.fragment.getFragment<FirstFragment>().binding.spinner.adapter.getItem(binding.fragment.getFragment<FirstFragment>().binding.spinner.selectedItemPosition) as Cursor?
+                    with(sitem!!) {
+                        val expense_item_id = getInt(0)
+                        put("expense_item_id", expense_item_id.toString())
+                    }
                 }
                 if (memoId != 0L) {
                     db.update(TABLE_NAME, values,"id = ?", arrayOf(memoId.toString()))
