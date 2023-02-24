@@ -18,6 +18,7 @@ class MemoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = MemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        title = "メモアプリ"
 
         val helper = DBHelper(this)
 
@@ -25,7 +26,7 @@ class MemoActivity: AppCompatActivity() {
         val memoId: Long = intent.getLongExtra("id",0)
         if (memoId != 0L) {
             helper.readableDatabase.let {
-                    db -> db.query(TABLE_NAME, arrayOf("id", "title", "content", "expense_item_id"), "id = ?", arrayOf(memoId.toString()), null, null, null, "1")
+                    db -> db.query(TABLE_NAME, arrayOf("id", "title", "content", "category_item_id"), "id = ?", arrayOf(memoId.toString()), null, null, null, "1")
                 .let { cursor ->
                     if (cursor.moveToFirst()) {
                         binding.textTitle.setText(cursor.getString(1))
@@ -43,8 +44,8 @@ class MemoActivity: AppCompatActivity() {
                     put("Content", binding.textContent.text.toString())
                     val sitem: Cursor? = binding.fragment.getFragment<FirstFragment>().binding.spinner.adapter.getItem(binding.fragment.getFragment<FirstFragment>().binding.spinner.selectedItemPosition) as Cursor?
                     with(sitem!!) {
-                        val expense_item_id = getInt(0)
-                        put("expense_item_id", expense_item_id.toString())
+                        val category_item_id = getInt(0)
+                        put("category_item_id", category_item_id.toString())
                     }
                 }
                 if (memoId != 0L) {
@@ -53,6 +54,7 @@ class MemoActivity: AppCompatActivity() {
                     db.insert(TABLE_NAME,null, values)
                 }
             }
+
             finish()
         }
 

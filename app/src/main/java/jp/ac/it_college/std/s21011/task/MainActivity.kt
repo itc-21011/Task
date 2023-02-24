@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     {
         val helper = DBHelper(this)
         helper.readableDatabase.let { db ->
-            db.query("memos", arrayOf("id", "title", "content", "expense_item_id"),null,null,null,null,null,null)
+            db.query("memos", arrayOf("id", "title", "content", "category_item_id"),null,null,null,null,null,null)
             .let { cursor ->
                 val memoList = mutableListOf<ListItem>()
                 if (cursor.moveToFirst()) {
